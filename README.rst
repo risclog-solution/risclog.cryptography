@@ -24,7 +24,7 @@ The CryptographyManager is a tool designed to securely encrypt and decrypt messa
 * Documentation: https://risclog.cryptography.readthedocs.io.
 
 1. Requirements
----------------
+===============
 
 
 To use the CryptographyManager, ensure you have the following:
@@ -32,7 +32,7 @@ To use the CryptographyManager, ensure you have the following:
     * The cryptography library, which can be installed using pip install cryptography.
 
 2. Installation
----------------
+===============
 
 Download the code for the CryptographyManager into your Python environment or add it directly to your Python project. Make sure that all dependencies are installed.
 
@@ -42,7 +42,7 @@ Example for installing the cryptography library::
 
 
 3. Using the CryptographyManager
---------------------------------
+================================
 
 **Initialization**
 
@@ -77,7 +77,8 @@ To encrypt a message, use the encrypt method. This is particularly useful for pr
 
 
 4. Troubleshooting
-------------------
+==================
+
 **Wrong password or salt:** If you try to decrypt a message with a different password or salt than what was used for encryption, you will get an error. Make sure to use the same password and salt.
 
 **Invalid messages:** Encryption requires valid strings or bytes. Ensure the text is correctly formatted.
@@ -85,7 +86,7 @@ To encrypt a message, use the encrypt method. This is particularly useful for pr
 **Event-loop issues (with async):** If you're using the encryption in an asynchronous environment (e.g., web applications), the manager will automatically detect if an event loop is running and adjust accordingly.
 
 5. Security Tips
-----------------
+================
 
 **Password security:** Choose a strong and secure password. A weak password can compromise the security of the encryption.
 
@@ -93,23 +94,16 @@ To encrypt a message, use the encrypt method. This is particularly useful for pr
 
 **Key storage:** Safeguard the password and salt securely. If they are lost, encrypted data cannot be recovered.
 
-
---------
+6. Tests
+========
 
 Run tests::
 
     $ ./pytest
 
 
-
-
-
-
-
-
-
 Credits
--------
+=======
 
 This package was created with Cookiecutter_ and the `risclog-solution/risclog-cookiecutter-pypackage`_ project template.
 
