@@ -23,11 +23,11 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
     ],
-    description='Fernet guarantees that a message encrypted using it cannot be manipulated or read without the key. Fernet is an implementation of symmetric (also known as "secret key") authenticated cryptography. Fernet also has support for implementing key rotation via :class:`MultiFernet`.',
+    description="The CryptographyManager is a tool designed to securely encrypt and decrypt messages and data. It uses modern encryption techniques to protect confidential information.",
     install_requires=[
-        "pydantic[dotenv]",
-        "pydantic-settings",
         # Add your dependencies here
+        "risclog.logging",
+        "cryptography",
     ],
     extras_require={
         "docs": [
@@ -39,13 +39,11 @@ setup(
             "pytest-flake8",
             "pytest-rerunfailures",
             "pytest-sugar",
+            "pytest-asyncio",
             "pytest",
             "coverage",
             # https://github.com/PyCQA/flake8/issues/1419#issuecomment-947243876
             "flake8<4",
-            "mock",
-            "requests",
-            "httpx",
         ],
     },
     license="MIT license",
