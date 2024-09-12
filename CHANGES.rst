@@ -9,7 +9,7 @@ Change log for risclog.cryptography
 - Nothing changed yet.
 
 
-1.1 (12.09.2024)
+1.1 (2024-09-12)
 ================
 
 - added default salt. Can be used with a single instance
