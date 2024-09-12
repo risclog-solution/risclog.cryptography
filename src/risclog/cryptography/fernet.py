@@ -1,3 +1,4 @@
+import os
 import base64
 import asyncio
 from typing import Union
@@ -24,11 +25,15 @@ class CryptographyManager:
         self.password = (
             password if isinstance(password, bytes) else str.encode(password)
         )
-        self.salt = (
-            salt
-            if isinstance(salt, bytes)
-            else str.encode(salt).decode("unicode_escape").encode()
-        )
+        if salt:
+            self.salt: bytes = (
+                salt
+                if isinstance(salt, bytes)
+                else str.encode(salt).decode("unicode_escape").encode()
+            )
+        else:
+            self.salt = os.urandom(16)
+
         self.iterations = iterations
         self.key_length = 32  # Length of the derived key in bytes (for Fernet)
 
