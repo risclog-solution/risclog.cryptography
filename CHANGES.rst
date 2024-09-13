@@ -3,10 +3,16 @@ Change log for risclog.cryptography
 ===================================
 
 
-1.1 (unreleased)
-================
+1.2 (unreleased)
+==================
 
 - Nothing changed yet.
+
+
+1.1 (2024-09-12)
+================
+
+- added default salt. Can be used with a single instance
 
 
 1.0 (2024-09-11)

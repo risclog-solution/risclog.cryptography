@@ -15,7 +15,7 @@ The CryptographyManager is a tool designed to securely encrypt and decrypt messa
 
 
 * Free software: MIT license
-* Documentation: https://risclog.cryptography.readthedocs.io.
+* Documentation: https://pypi.org/project/risclog.cryptography.
 
 
 Requirements
@@ -69,6 +69,20 @@ To encrypt a message, use the encrypt method. This is particularly useful for pr
    encrypted_message = crypto_manager.encrypt(message)
 
    print(f"Encrypted message: {encrypted_message}")
+
+Decryption
+----------
+
+To decrypt an encrypted message, use the decrypt method:
+
+#. Call the decrypt method with the encrypted message.
+#. The original message will be restored.
+
+.. code-block:: python
+
+   decrypted_message = crypto_manager.decrypt(encrypted_message)
+
+   print(f"Decrypted message: {decrypted_message}")
 
 
 Troubleshooting
