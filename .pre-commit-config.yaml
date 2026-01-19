@@ -3,7 +3,7 @@
 repos:
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.2.0
+    rev: v5.0.0
     hooks:
 
     # These are the most critical checks.
@@ -51,11 +51,15 @@ repos:
     # This checks that all links to our VCS are permalinks. How oddly specific!
     - id: check-vcs-permalinks
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "v0.4.1"
+    rev: v0.11.13
     hooks:
     - id: ruff
       args: [--fix, --exit-non-zero-on-fix]
     - id: ruff-format
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.23.1
+    hooks:
+      - id: gitleaks
   - repo: https://github.com/asottile/pyupgrade
     rev: v1.26.1
     hooks:
@@ -64,3 +68,17 @@ repos:
     rev: '0.40'
     hooks:
     - id: check-manifest
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.14.1
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - pytest
+          - pydantic
+        exclude: ^(scripts/|examples/|docs/)
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+    - id: rst-backticks
+    - id: rst-directive-colons
+    - id: rst-inline-touching-normal

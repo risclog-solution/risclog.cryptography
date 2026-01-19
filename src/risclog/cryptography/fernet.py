@@ -1,7 +1,7 @@
 import os
 import base64
 import asyncio
-from typing import Union
+from typing import Union, Optional, cast
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
@@ -12,7 +12,7 @@ class CryptographyManager:
     def __init__(
         self,
         password: Union[str, bytes],
-        salt: Union[str, bytes] = None,
+        salt: Optional[Union[str, bytes]] = None,
         iterations: int = 400000,
     ):
         """
@@ -63,36 +63,36 @@ class CryptographyManager:
         :return: The encrypted message.
         """
         message = message if isinstance(message, bytes) else str.encode(message)
-        return await asyncio.to_thread(self.fernet.encrypt, message)
+        return cast(bytes, await asyncio.to_thread(self.fernet.encrypt, message))
 
-    async def __adecrypt(self, token: bytes) -> bytes:
+    async def __adecrypt(self, token: bytes) -> str:
         """
         Decrypt the given token using Fernet asynchronously.
 
         :param token: The encrypted message to decrypt.
         :return: The decrypted message.
         """
-        message = await asyncio.to_thread(self.fernet.decrypt, token)
+        message = cast(bytes, await asyncio.to_thread(self.fernet.decrypt, token))
         return message.decode()
 
     def encrypt(self, message: Union[str, bytes]) -> bytes:
         try:
-            loop: asyncio.AbstractEventLoop = asyncio.get_running_loop()
+            loop: Optional[asyncio.AbstractEventLoop] = asyncio.get_running_loop()
         except RuntimeError:
             loop = None
 
         if loop and loop.is_running():
-            return self.__aencrypt(message=message)
+            return self.__aencrypt(message=message)  # type: ignore[return-value]
         else:
             return asyncio.run(self.__aencrypt(message=message))
 
-    def decrypt(self, token: bytes) -> bytes:
+    def decrypt(self, token: bytes) -> str:
         try:
-            loop: asyncio.AbstractEventLoop = asyncio.get_running_loop()
+            loop: Optional[asyncio.AbstractEventLoop] = asyncio.get_running_loop()
         except RuntimeError:
             loop = None
 
         if loop and loop.is_running():
-            return self.__adecrypt(token=token)
+            return self.__adecrypt(token=token)  # type: ignore[return-value]
         else:
             return asyncio.run(self.__adecrypt(token=token))

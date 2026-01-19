@@ -2,7 +2,7 @@
 
 """The setup script."""
 
-from setuptools import find_packages, setup
+from setuptools import find_namespace_packages, setup
 
 with open("README.rst") as readme_file:
     readme = readme_file.read()
@@ -22,6 +22,8 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
     ],
     description="The CryptographyManager is a tool designed to securely encrypt and decrypt messages and data. It uses modern encryption techniques to protect confidential information.",
     install_requires=[
@@ -51,7 +53,7 @@ setup(
     include_package_data=True,
     keywords="risclog.cryptography",
     name="risclog.cryptography",
-    packages=find_packages("src"),
+    packages=find_namespace_packages("src", include=["risclog.*"]),
     namespace_packages=["risclog"],
     package_dir={"": "src"},
     url="https://github.com/risclog-solution/risclog.cryptography",
