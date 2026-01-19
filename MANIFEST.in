@@ -5,6 +5,8 @@ include HISTORY.rst
 include LICENSE
 include README.rst
 include src/risclog/cryptography/alembic/README
+include Makefile
+include mypy.ini
 
 recursive-include tests *
 recursive-exclude * __pycache__
