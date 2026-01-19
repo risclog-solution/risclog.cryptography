@@ -3,7 +3,7 @@ Change log for risclog.cryptography
 ===================================
 
 
-1.2 (unreleased)
+1.2 (2026-01-19)
 ================
 
 - Fixed type annotations for ``encrypt()`` and ``decrypt()`` methods to accurately reflect dual-mode behavior: return ```Coroutine``` when called from within a running event loop, or direct result when called outside an event loop
