@@ -57,6 +57,6 @@ setup(
     namespace_packages=["risclog"],
     package_dir={"": "src"},
     url="https://github.com/risclog-solution/risclog.cryptography",
-    version="1.2",
+    version="1.3.dev0",
     zip_safe=False,
 )
