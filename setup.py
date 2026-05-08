@@ -54,7 +54,6 @@ setup(
     keywords="risclog.cryptography",
     name="risclog.cryptography",
     packages=find_namespace_packages("src", include=["risclog.*"]),
-    namespace_packages=["risclog"],
     package_dir={"": "src"},
     url="https://github.com/risclog-solution/risclog.cryptography",
     version="1.3.dev0",

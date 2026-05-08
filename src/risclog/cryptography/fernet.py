@@ -1,11 +1,12 @@
-import os
-import base64
 import asyncio
-from typing import Union, Optional, cast, Coroutine, Any
+import base64
+import os
+from typing import Any, Coroutine, Optional, Union, cast
+
+from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.backends import default_backend
-from cryptography.fernet import Fernet
 
 
 class CryptographyManager:
@@ -116,3 +117,41 @@ class CryptographyManager:
             return self.__adecrypt(token=token)
         else:
             return asyncio.run(self.__adecrypt(token=token))
+
+
+class AirflowFernetCryptographyManager:
+    """Native Airflow-Fernet compatible encryption.
+
+    Airflow stores Fernet keys as 32-byte url-safe base64 strings in
+    ``AIRFLOW__CORE__FERNET_KEY``. This manager uses that key directly and
+    intentionally does not derive a new key from password/salt.
+    """
+
+    def __init__(self, key: Union[str, bytes]):
+        self.key = key if isinstance(key, bytes) else str.encode(key)
+        self.fernet = Fernet(self.key)
+
+    @staticmethod
+    def generate_key() -> bytes:
+        """Generate a native Airflow-compatible Fernet key."""
+        return cast(bytes, Fernet.generate_key())
+
+    @classmethod
+    def from_env(
+        cls, env_name: str = "AIRFLOW__CORE__FERNET_KEY"
+    ) -> "AirflowFernetCryptographyManager":
+        """Create a manager from an environment variable."""
+        key = os.getenv(env_name)
+        if not key:
+            raise RuntimeError(f"Missing Fernet key environment variable: {env_name}")
+        return cls(key)
+
+    def encrypt(self, message: Union[str, bytes]) -> bytes:
+        """Encrypt *message* and return a native ``gAAAA...`` Fernet token."""
+        value = message if isinstance(message, bytes) else str.encode(message)
+        return cast(bytes, self.fernet.encrypt(value))
+
+    def decrypt(self, token: Union[str, bytes]) -> str:
+        """Decrypt a native Airflow-Fernet token."""
+        value = token if isinstance(token, bytes) else str.encode(token)
+        return cast(str, self.fernet.decrypt(value).decode())

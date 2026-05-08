@@ -1,7 +1,11 @@
 import os
+
 import pytest
 from cryptography.fernet import InvalidToken
-from risclog.cryptography import CryptographyManager
+from risclog.cryptography import (
+    AirflowFernetCryptographyManager,
+    CryptographyManager,
+)
 
 
 @pytest.mark.asyncio
@@ -80,3 +84,40 @@ def test_cryptography_manager_invalid_token():
 
     with pytest.raises(InvalidToken):
         crypto_manager.decrypt(invalid_token)
+
+
+def test_airflow_fernet_cryptography_manager_roundtrip():
+    key = AirflowFernetCryptographyManager.generate_key()
+    crypto_manager = AirflowFernetCryptographyManager(key)
+
+    token = crypto_manager.encrypt("Secret message!")
+
+    assert token.startswith(b"gAAAA")
+    assert crypto_manager.decrypt(token) == "Secret message!"
+    assert crypto_manager.decrypt(token.decode()) == "Secret message!"
+
+
+def test_airflow_fernet_cryptography_manager_from_env(monkeypatch):
+    key = AirflowFernetCryptographyManager.generate_key().decode()
+    monkeypatch.setenv("AIRFLOW__CORE__FERNET_KEY", key)
+
+    crypto_manager = AirflowFernetCryptographyManager.from_env()
+    token = crypto_manager.encrypt(b"Secret message!")
+
+    assert crypto_manager.decrypt(token) == "Secret message!"
+
+
+def test_airflow_fernet_cryptography_manager_from_env_missing(monkeypatch):
+    monkeypatch.delenv("AIRFLOW__CORE__FERNET_KEY", raising=False)
+
+    with pytest.raises(RuntimeError, match="AIRFLOW__CORE__FERNET_KEY"):
+        AirflowFernetCryptographyManager.from_env()
+
+
+def test_airflow_fernet_cryptography_manager_invalid_token():
+    crypto_manager = AirflowFernetCryptographyManager(
+        AirflowFernetCryptographyManager.generate_key()
+    )
+
+    with pytest.raises(InvalidToken):
+        crypto_manager.decrypt("InvalidToken")

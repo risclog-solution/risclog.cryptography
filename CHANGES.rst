@@ -6,7 +6,9 @@ Change log for risclog.cryptography
 1.3 (unreleased)
 ================
 
-- Nothing changed yet.
+- Added ``AirflowFernetCryptographyManager`` for native Airflow-Fernet
+  compatible ``gAAAA...`` tokens using ``AIRFLOW__CORE__FERNET_KEY``.
+- Kept the existing ``CryptographyManager`` password/salt API unchanged.
 
 
 1.2 (2026-01-19)

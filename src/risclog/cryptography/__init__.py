@@ -1,4 +1,13 @@
-from risclog.cryptography.fernet import CryptographyManager as FernetCryptographyManager
+from risclog.cryptography.fernet import (
+    AirflowFernetCryptographyManager,
+    CryptographyManager as FernetCryptographyManager,
+)
 
 # Fernet is the default
 CryptographyManager = FernetCryptographyManager  # noqa
+
+__all__ = [
+    "AirflowFernetCryptographyManager",
+    "CryptographyManager",
+    "FernetCryptographyManager",
+]
