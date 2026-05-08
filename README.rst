@@ -85,6 +85,23 @@ To decrypt an encrypted message, use the decrypt method:
    print(f"Decrypted message: {decrypted_message}")
 
 
+Airflow-Fernet Compatibility
+============================
+
+For values that must be encrypted with Airflow's native Fernet key from
+``AIRFLOW__CORE__FERNET_KEY``, use ``AirflowFernetCryptographyManager``.
+This API does not use password/salt derivation and produces native
+``gAAAA...`` tokens.
+
+.. code-block:: python
+
+   from risclog.cryptography import AirflowFernetCryptographyManager
+
+   crypto = AirflowFernetCryptographyManager.from_env()
+   token = crypto.encrypt("secret")
+   plain = crypto.decrypt(token)
+
+
 Troubleshooting
 ===============
 
