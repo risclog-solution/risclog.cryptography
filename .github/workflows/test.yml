@@ -49,7 +49,7 @@ jobs:
     if: needs.check-release.outputs.result == '1'
     uses: risclog-solution/gha_workflow_templates/.github/workflows/release.yml@master
     with:
-      package_name: risclog.step.airflow.api.trigger
+      package_name: risclog.cryptography
     secrets:
       PYPIRC: ${{ secrets.PYPIRC }}
       BUILD_SVC_PAT: ${{ secrets.BUILD_SVC_PAT }}
