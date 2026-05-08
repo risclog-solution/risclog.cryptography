@@ -3,7 +3,7 @@ Change log for risclog.cryptography
 ===================================
 
 
-1.3 (unreleased)
+1.3 (2026-05-08)
 ================
 
 - Added ``AirflowFernetCryptographyManager`` for native Airflow-Fernet
