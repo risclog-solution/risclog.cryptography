@@ -3,6 +3,12 @@ Change log for risclog.cryptography
 ===================================
 
 
+1.4 (unreleased)
+================
+
+- Nothing changed yet.
+
+
 1.3 (2026-05-08)
 ================
 
